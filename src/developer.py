@@ -1,5 +1,6 @@
 import sqlite3
 
+
 ##############################################################################################################
 def delete_table(table_name):
     db = sqlite3.connect("app.db")
@@ -8,11 +9,14 @@ def delete_table(table_name):
     db.commit()
     db.close()
     print(f"Table {table_name} deleted successfully !")
+
+
 ##############################################################################################################
 def create_table(table_name):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
-    cr.execute(f"""
+    cr.execute(
+        f"""
         CREATE TABLE IF NOT EXISTS {table_name} (
             name TEXT,
             uid INTEGER,
@@ -22,10 +26,13 @@ def create_table(table_name):
             phoneNumber TEXT,
             PIN TEXT
         )
-    """)
+    """
+    )
     db.commit()
     db.close()
     print(f"Table {table_name} created successfully !")
+
+
 ##############################################################################################################
 def show_table(table_name):
     db = sqlite3.connect("app.db")
@@ -33,16 +40,22 @@ def show_table(table_name):
     cr.execute(f"SELECT * FROM {table_name}")
     print(cr.fetchall())
     db.close()
+
+
 ##############################################################################################################
 ##############################################################################################################
+
 
 def add_user(name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
-    cr.execute(f"INSERT INTO users (name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN) VALUES ('{name}', {uid}, '{accountNumber}', '{accountBalance}', '{nationalID}', '{phoneNumber}', '{PIN}')")
+    cr.execute(
+        f"INSERT INTO users (name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN) VALUES ('{name}', {uid}, '{accountNumber}', '{accountBalance}', '{nationalID}', '{phoneNumber}', '{PIN}')"
+    )
     db.commit()
     db.close()
     print(f"{name} added successfully !")
+
 
 def delete_user(uid):
     db = sqlite3.connect("app.db")
@@ -52,6 +65,7 @@ def delete_user(uid):
     db.close()
     print(f"User with uid {uid} deleted successfully !")
 
+
 def input_user():
     name = input("Enter name: ")
     uid = int(input("Enter uid: "))
@@ -60,7 +74,16 @@ def input_user():
     nationalID = input("Enter national ID: ")
     phoneNumber = input("Enter phone number: ")
     PIN = input("Enter PIN: ")
-    add_user(name.strip(), uid.strip(), accountNumber.strip(), accountBalance.strip(), nationalID.strip(), phoneNumber.strip(), PIN.strip())
+    add_user(
+        name.strip(),
+        uid.strip(),
+        accountNumber.strip(),
+        accountBalance.strip(),
+        nationalID.strip(),
+        phoneNumber.strip(),
+        PIN.strip(),
+    )
+
 
 ###################################################################### Update functions ######################################################################
 def update_name(name, uid):
@@ -71,6 +94,7 @@ def update_name(name, uid):
     db.close()
     print(f"Name updated successfully !")
 
+
 def update_accountNumber(accountNumber, uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -79,13 +103,17 @@ def update_accountNumber(accountNumber, uid):
     db.close()
     print(f"Account number updated successfully !")
 
+
 def update_accountBalance(accountBalance, uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
-    cr.execute(f"UPDATE users SET accountBalance = '{accountBalance}' WHERE uid = {uid}")
+    cr.execute(
+        f"UPDATE users SET accountBalance = '{accountBalance}' WHERE uid = {uid}"
+    )
     db.commit()
     db.close()
     print(f"Account balance updated successfully !")
+
 
 def update_nationalID(nationalID, uid):
     db = sqlite3.connect("app.db")
@@ -95,6 +123,7 @@ def update_nationalID(nationalID, uid):
     db.close()
     print(f"National ID updated successfully !")
 
+
 def update_phoneNumber(phoneNumber, uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -103,6 +132,7 @@ def update_phoneNumber(phoneNumber, uid):
     db.close()
     print(f"Phone number updated successfully !")
 
+
 def update_PIN(PIN, uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -110,7 +140,10 @@ def update_PIN(PIN, uid):
     db.commit()
     db.close()
     print(f"PIN updated successfully !")
+
+
 #################################################################################################################################################################
+
 
 ########################################################### Retrieve functions ##################################################################################
 def retrieve_name(uid):
@@ -123,7 +156,8 @@ def retrieve_name(uid):
         return row[0]
     else:
         return None
-    
+
+
 def retrieve_accountNumber(uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -134,7 +168,8 @@ def retrieve_accountNumber(uid):
         return row[0]
     else:
         return None
-    
+
+
 def retrieve_accountBalance(uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -145,6 +180,7 @@ def retrieve_accountBalance(uid):
         return row[0]
     else:
         return None
+
 
 def retrieve_nationalID(uid):
     db = sqlite3.connect("app.db")
@@ -157,6 +193,7 @@ def retrieve_nationalID(uid):
     else:
         return None
 
+
 def retrieve_phoneNumber(uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -167,6 +204,7 @@ def retrieve_phoneNumber(uid):
         return row[0]
     else:
         return None
+
 
 def retrieve_PIN(uid):
     db = sqlite3.connect("app.db")
@@ -179,20 +217,14 @@ def retrieve_PIN(uid):
     else:
         return None
 
-#################################################################################################################################################################
 
+#################################################################################################################################################################
 
 
 print(retrieve_PIN(1))
 
 
-
-
-
-
-
-
-'''
+"""
 def add_user(table, name, age, uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -223,4 +255,4 @@ def update_age(table, age, uid):
     db.commit()
     db.close()
 
-'''
+"""
