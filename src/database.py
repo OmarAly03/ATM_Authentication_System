@@ -77,7 +77,7 @@ def show_table(table_name):
 
 #################################################### User & Transactions Management #####################################################
 def add_user(name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(
         f"INSERT INTO users (name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN) VALUES ('{name}', {uid}, '{accountNumber}', '{accountBalance}', '{nationalID}', '{phoneNumber}', '{PIN}')"
@@ -102,7 +102,7 @@ def add_transaction(
 
 
 def delete_user(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"DELETE FROM users WHERE uid = {uid}")
     db.commit()
@@ -111,7 +111,7 @@ def delete_user(uid):
 
 
 def delete_transaction(transactionID):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"DELETE FROM transactions WHERE transactionID = {transactionID}")
     db.commit()
@@ -141,7 +141,7 @@ def input_user():
 ################################################## users Table Update Functions ####################################################################
 
 def update_name(name, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"UPDATE users SET name = '{name}' WHERE uid = {uid}")
     db.commit()
@@ -150,7 +150,7 @@ def update_name(name, uid):
 
 
 def update_accountNumber(accountNumber, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"UPDATE users SET accountNumber = '{accountNumber}' WHERE uid = {uid}")
     db.commit()
@@ -170,7 +170,7 @@ def update_accountBalance(accountBalance, uid):
 
 
 def update_nationalID(nationalID, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"UPDATE users SET nationalID = '{nationalID}' WHERE uid = {uid}")
     db.commit()
@@ -179,7 +179,7 @@ def update_nationalID(nationalID, uid):
 
 
 def update_phoneNumber(phoneNumber, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"UPDATE users SET phoneNumber = '{phoneNumber}' WHERE uid = {uid}")
     db.commit()
@@ -188,7 +188,7 @@ def update_phoneNumber(phoneNumber, uid):
 
 
 def update_PIN(PIN, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"UPDATE users SET PIN = '{PIN}' WHERE uid = {uid}")
     db.commit()
@@ -226,9 +226,9 @@ def retrieve_name(uid):
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["name"])
+        return row["name"]
     else:
-        print("Not found")
+        return "Not found"
 
 def retrieve_accountNumber(uid):
     db = sqlite3.connect("src/app.db")
@@ -242,7 +242,7 @@ def retrieve_accountNumber(uid):
     else:
         return "Not found"
 
-def retrieve_accountBalance(uid):
+def retrieve_accountBalance(uid) -> int:
     db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
@@ -295,7 +295,7 @@ def retrieve_PIN(uid):
 ######################################### transactions Table Retrieval Functions #######################################################
  
 def retrieve_accountTransactions(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"SELECT * FROM transactions WHERE uid = {uid}")
     entries = cr.fetchall()
@@ -305,7 +305,7 @@ def retrieve_accountTransactions(uid):
     db.close()
 
 def retrieve_transactionType(transactionID):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(
@@ -319,7 +319,7 @@ def retrieve_transactionType(transactionID):
         print("Not found")
 
 def retrieve_transactionDate(transactionID):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT date FROM transactions WHERE transactionID = {transactionID}")
@@ -331,7 +331,7 @@ def retrieve_transactionDate(transactionID):
         print("Not found")
 
 def retrieve_transactionAmount(transactionID):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT amount FROM transactions WHERE transactionID = {transactionID}")
@@ -400,6 +400,5 @@ def update_transactionID():
     db.close()
     return transactionID + 1
 ################################################################################################################################
-
 
 
