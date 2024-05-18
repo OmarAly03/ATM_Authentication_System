@@ -144,7 +144,6 @@ def update_PIN(PIN, uid):
 
 #################################################################################################################################################################
 
-
 ########################################################### Retrieve functions ##################################################################################
 def retrieve_name(uid):
     db = sqlite3.connect("app.db")
@@ -220,39 +219,3 @@ def retrieve_PIN(uid):
 
 #################################################################################################################################################################
 
-
-print(retrieve_PIN(1))
-
-
-"""
-def add_user(table, name, age, uid):
-    db = sqlite3.connect("app.db")
-    cr = db.cursor()
-    cr.execute(f"insert into {table} (name, age, uid) values ('{name}', {age}, {uid})")
-    print("User added successfully !")
-    cr.execute("select * from users")
-    print(cr.fetchall())
-    db.commit()
-    db.close()
-
-def update_name(table, name, uid):
-    db = sqlite3.connect("app.db")
-    cr = db.cursor()
-    cr.execute(f"update {table} set name = '{name}' where uid = {uid}")
-    print("Name updated successfully !")
-    cr.execute("select * from users")
-    print(cr.fetchall())
-    db.commit()
-    db.close()
-
-def update_age(table, age, uid):
-    db = sqlite3.connect("app.db")
-    cr = db.cursor()
-    cr.execute(f"update {table} set age = {age} where uid = {uid}")
-    print("Age updated successfully !")
-    cr.execute("select * from users")
-    print(cr.fetchall())
-    db.commit()
-    db.close()
-
-"""

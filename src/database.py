@@ -1,8 +1,8 @@
 import sqlite3
 
-
+################################################### Table Management #####################################################################
 def create_users_table(table_name):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(
         f"""
@@ -23,7 +23,7 @@ def create_users_table(table_name):
 
 
 def create_transactions_table(table_name):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(
         f"""
@@ -43,9 +43,19 @@ def create_transactions_table(table_name):
     db.close()
     print(f"Table {table_name} created successfully !")
 
+def create_variables_table(table_name):
+    db = sqlite3.connect("src/app.db")
+    cr = db.cursor()
+    cr.execute(
+        f"CREATE TABLE IF NOT EXISTS {table_name} (transactionID INTEGER)"
+    )
+    db.commit()
+    db.close()
+    print(f"Table {table_name} created successfully !")
+
 
 def delete_table(table_name):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"DROP TABLE IF EXISTS {table_name}")
     db.commit()
@@ -54,7 +64,7 @@ def delete_table(table_name):
 
 
 def show_table(table_name):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"SELECT rowid, * FROM {table_name}")
     entries = cr.fetchall()
@@ -63,7 +73,9 @@ def show_table(table_name):
     db.commit()
     db.close()
 
+########################################################################################################################################
 
+#################################################### User & Transactions Management #####################################################
 def add_user(name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -78,7 +90,8 @@ def add_user(name, uid, accountNumber, accountBalance, nationalID, phoneNumber, 
 def add_transaction(
     transactionID, transactionType, uid, date, amount, newBalance, sender, receiver
 ):
-    db = sqlite3.connect("app.db")
+    
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(
         f"INSERT INTO transactions (transactionID, transactionType, uid, date, amount, newBalance, sender, receiver) VALUES ('{transactionID}', '{transactionType}',  {uid}, '{date}', '{amount}', '{newBalance}', '{sender}', '{receiver}')"
@@ -123,11 +136,9 @@ def input_user():
         phoneNumber.strip(),
         PIN.strip(),
     )
+########################################################################################################################################
 
-    """
-        Update Functions
-    """
-
+################################################## users Table Update Functions ####################################################################
 
 def update_name(name, uid):
     db = sqlite3.connect("app.db")
@@ -148,7 +159,7 @@ def update_accountNumber(accountNumber, uid):
 
 
 def update_accountBalance(accountBalance, uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(
         f"UPDATE users SET accountBalance = '{accountBalance}' WHERE uid = {uid}"
@@ -184,23 +195,31 @@ def update_PIN(PIN, uid):
     db.close()
     print(f"PIN updated successfully !")
 
+########################################################################################################################################
 
-"""
-    Retrieval Functions
-"""
-
-
+############################################### users Table Retrieval Functions ####################################################################
 def retrieve_account(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     cr = db.cursor()
     cr.execute(f"SELECT * FROM users WHERE uid = {uid}")
     data = cr.fetchall()
     print(data)
     db.close()
 
+def retrieve_uid_with_username(name):
+    db = sqlite3.connect("src/app.db")
+    db.row_factory = sqlite3.Row
+    cr = db.cursor()
+    cr.execute(f"SELECT uid FROM users WHERE name = '{name}'")
+    row = cr.fetchone()
+    db.close()
+    if row is not None:
+        return row["uid"]
+    else:
+        return "Not found"
 
 def retrieve_name(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT name FROM users WHERE uid = {uid}")
@@ -211,77 +230,70 @@ def retrieve_name(uid):
     else:
         print("Not found")
 
-
 def retrieve_accountNumber(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT accountNumber FROM users WHERE uid = {uid}")
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["accountNumber"])
+        return row["accountNumber"]
     else:
-        print("Not found")
-
+        return "Not found"
 
 def retrieve_accountBalance(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT accountBalance FROM users WHERE uid = {uid}")
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["accountBalance"])
+        return row["accountBalance"]
     else:
-        print("Not found")
-
+        return "Not found"
 
 def retrieve_nationalID(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT nationalID FROM users WHERE uid = {uid}")
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["nationalID"])
+        return row["nationalID"]
     else:
-        print("Not found")
-
-
+        return "Not found"
+    
 def retrieve_phoneNumber(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT phoneNumber FROM users WHERE uid = {uid}")
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["phoneNumber"])
+        return row["phoneNumber"]
     else:
-        print("Not found")
-
+        return "Not found"
 
 def retrieve_PIN(uid):
-    db = sqlite3.connect("app.db")
+    db = sqlite3.connect("src/app.db")
     db.row_factory = sqlite3.Row
     cr = db.cursor()
     cr.execute(f"SELECT PIN FROM users WHERE uid = {uid}")
     row = cr.fetchone()
     db.close()
     if row is not None:
-        print(row["PIN"])
+        return row["PIN"]
     else:
-        print("Not found")
+        return "Not found"
 
+########################################################################################################################################
 
-""" 
-transactions retrieval functions 
-"""
-
-
+######################################### transactions Table Retrieval Functions #######################################################
+ 
 def retrieve_accountTransactions(uid):
     db = sqlite3.connect("app.db")
     cr = db.cursor()
@@ -291,7 +303,6 @@ def retrieve_accountTransactions(uid):
         print(entry)
     db.commit()
     db.close()
-
 
 def retrieve_transactionType(transactionID):
     db = sqlite3.connect("app.db")
@@ -307,7 +318,6 @@ def retrieve_transactionType(transactionID):
     else:
         print("Not found")
 
-
 def retrieve_transactionDate(transactionID):
     db = sqlite3.connect("app.db")
     db.row_factory = sqlite3.Row
@@ -319,7 +329,6 @@ def retrieve_transactionDate(transactionID):
         print(row["date"])
     else:
         print("Not found")
-
 
 def retrieve_transactionAmount(transactionID):
     db = sqlite3.connect("app.db")
@@ -333,7 +342,6 @@ def retrieve_transactionAmount(transactionID):
     else:
         print("Not found")
 
-
 def retrieve_transactionSender(transactionID):
     db = sqlite3.connect("app.db")
     db.row_factory = sqlite3.Row
@@ -345,7 +353,6 @@ def retrieve_transactionSender(transactionID):
         print(row["sender"])
     else:
         print("Not found")
-
 
 def retrieve_transactionReceiver(transactionID):
     db = sqlite3.connect("app.db")
@@ -360,3 +367,39 @@ def retrieve_transactionReceiver(transactionID):
         print(row["receiver"])
     else:
         print("Not found")
+
+def retrieve_transactionID():
+    db = sqlite3.connect("src/app.db")
+    db.row_factory = sqlite3.Row
+    cr = db.cursor()
+    cr.execute("SELECT transactionID FROM variables")
+    row = cr.fetchone()
+    db.close()
+    if row is not None:
+        return row["transactionID"]
+    else:
+        return "Not found"
+    
+def reset_transactionID():
+    db = sqlite3.connect("src/app.db")
+    cr = db.cursor()
+    cr.execute(f"UPDATE variables SET transactionID = (0)")
+    db.commit()
+    db.close()
+
+def update_transactionID():
+    db = sqlite3.connect("src/app.db")
+    db.row_factory = sqlite3.Row  # Add this line
+    cr = db.cursor()
+    cr.execute("SELECT transactionID FROM variables")
+    row = cr.fetchone()
+    if row is not None:
+        transactionID = row["transactionID"]
+        cr.execute("UPDATE variables SET transactionID = ?", ((transactionID + 1),))
+        db.commit()
+    db.close()
+    return transactionID + 1
+################################################################################################################################
+
+
+
