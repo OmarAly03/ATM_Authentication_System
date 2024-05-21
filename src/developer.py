@@ -41,50 +41,6 @@ def show_table(table_name):
     print(cr.fetchall())
     db.close()
 
-
-##############################################################################################################
-##############################################################################################################
-
-
-def add_user(name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN):
-    db = sqlite3.connect("app.db")
-    cr = db.cursor()
-    cr.execute(
-        f"INSERT INTO users (name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN) VALUES ('{name}', {uid}, '{accountNumber}', '{accountBalance}', '{nationalID}', '{phoneNumber}', '{PIN}')"
-    )
-    db.commit()
-    db.close()
-    print(f"{name} added successfully !")
-
-
-def delete_user(uid):
-    db = sqlite3.connect("app.db")
-    cr = db.cursor()
-    cr.execute(f"DELETE FROM users WHERE uid = {uid}")
-    db.commit()
-    db.close()
-    print(f"User with uid {uid} deleted successfully !")
-
-
-def input_user():
-    name = input("Enter name: ")
-    uid = int(input("Enter uid: "))
-    accountNumber = input("Enter account number: ")
-    accountBalance = input("Enter account balance: ")
-    nationalID = input("Enter national ID: ")
-    phoneNumber = input("Enter phone number: ")
-    PIN = input("Enter PIN: ")
-    add_user(
-        name.strip(),
-        uid.strip(),
-        accountNumber.strip(),
-        accountBalance.strip(),
-        nationalID.strip(),
-        phoneNumber.strip(),
-        PIN.strip(),
-    )
-
-
 ###################################################################### Update functions ######################################################################
 def update_name(name, uid):
     db = sqlite3.connect("app.db")
@@ -140,7 +96,6 @@ def update_PIN(PIN, uid):
     db.commit()
     db.close()
     print(f"PIN updated successfully !")
-
 
 #################################################################################################################################################################
 
@@ -215,7 +170,6 @@ def retrieve_PIN(uid):
         return row[0]
     else:
         return None
-
 
 #################################################################################################################################################################
 
