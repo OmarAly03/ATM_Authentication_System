@@ -33,9 +33,9 @@ How can we help you today ?\n
             print("Your account balance is: ", user1.getAccountBalance())
 
         elif choice == "2":
-            print("Your account number is: ", user1.getAccountNumber())
-            print("Your national ID is: ", user1.getNationalID())
-            print("Your phone number is: ", user1.getPhoneNumber())
+            print(f"Your account number is: {user1.getAccountNumber()}")
+            print(f"Your national ID is: {user1.getNationalID()}")
+            print(f"Your phone number is: {user1.getPhoneNumber()}")
 
         elif choice == "3":
             amount = int(input("Enter the amount you want to deposit: "))

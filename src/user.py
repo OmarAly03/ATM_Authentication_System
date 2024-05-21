@@ -57,8 +57,10 @@ class User:
             database.add_transaction(temp, "withdraw", self.uid, date_string, amount, currentBalance, database.retrieve_name(self.uid), "self")
             
             print("Withdrawal Successful!")
+            return True
         else:
             print("Insufficient Amount!")
+            return False
     
     def makeTransaction(self, recipient : str, amount : int):
         senderBalance = database.retrieve_accountBalance(self.uid)
@@ -80,12 +82,15 @@ class User:
             database.add_transaction(temp, "transaction", self.uid, date_string, amount, senderBalance, database.retrieve_name(self.uid), recipient)
             
             print("Transaction Successful!")
+            return True
         else:
             print("Insufficient Amount!")
+            return False
         
     def showLatestTransactions(self):
         transactions = database.retrieve_accountTransactions(self.uid)
         print(transactions)
+        return transactions
          
 class Authentication(User):
     def __init__(self, name):

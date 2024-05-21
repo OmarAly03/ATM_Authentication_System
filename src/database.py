@@ -299,10 +299,13 @@ def retrieve_accountTransactions(uid):
     cr = db.cursor()
     cr.execute(f"SELECT * FROM transactions WHERE uid = {uid}")
     entries = cr.fetchall()
-    for entry in entries:
+    string = ""
+    for entry in entries[:7]:
         print(entry)
+        string += str(entry) + "\n"
     db.commit()
     db.close()
+    return string
 
 def retrieve_transactionType(transactionID):
     db = sqlite3.connect("src/app.db")
