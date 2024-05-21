@@ -1,5 +1,30 @@
 import sqlite3
 import database
+import os
+from tabulate import tabulate
+
+"""
+Class Bank Methods:
+
+- add_user(self, name, uid, accountNumber, accountBalance, nationalID, phoneNumber, PIN)
+- input_user(self)
+- delete_user(self, uid)
+- show_table(self, table_name)
+- update_name(self, name, uid)
+- update_accountNumber(self, accountNumber, uid)
+- update_accountBalance(self, accountBalance, uid)
+- update_nationalID(self, nationalID, uid)
+- update_phoneNumber(self, phoneNumber, uid)
+- update_PIN(self, PIN, uid)
+- retrieve_account(self, uid)
+- retrieve_uid_with_username(self, name)
+- retrieve_name(self, uid)
+- retrieve_accountNumber(self, uid)
+- retrieve_accountBalance(self, uid)
+- retrieve_nationalID(self, uid)
+- retrieve_phoneNumber(self, uid)
+- retrieve_PIN(self, uid)
+"""
 
 class Bank():
     def __init__(self):
@@ -40,8 +65,19 @@ class Bank():
         db.commit()
         db.close()
         print(f"User with uid {uid} deleted successfully !")
+    
+    def show_table(self, table_name):
+        db = sqlite3.connect("src/app.db")
+        cr = db.cursor()
+        cr.execute(f"SELECT rowid, * FROM {table_name}")
+        entries = cr.fetchall()
+        headers = [description[0] for description in cr.description]
+        print(tabulate(entries, headers=headers, tablefmt='pretty'))
+        db.commit()
+        db.close()
 
-    ################################################## users Table Update Functions ####################################################################
+
+################################################## users Table Update Functions ####################################################################
     def update_name(self, name, uid):
         db = sqlite3.connect("src/app.db")
         cr = db.cursor()
@@ -189,5 +225,114 @@ class Bank():
         
 ########################################################################################################################################
 
-user1 = Bank()
-user1.input_user()
+def main():
+    user1 = Bank()
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("########################################")
+        print("Welcome to the Bank System!\nWhat would you like to do?\n")
+        print("1. Add User\n2. Delete User\n3. Update User\n4. Retrieve User Data\n5. Show Users Table\n6. Exit\n")
+
+        choice = input("Enter your choice: ")
+
+        match choice:
+            case "1":
+                user1.input_user()
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(f"User Added Successfully !")
+            case "2":
+                uid = int(input("Enter uid of user to delete: "))
+                os.system('cls' if os.name == 'nt' else 'clear')
+                user1.delete_user(uid)
+
+            case "3":
+                uid = int(input("Enter uid of user to update data: "))
+                while True:
+                    print("########################################")
+                    print("What would you like to update:\n")
+                    print("1. Name\n2. Account Number\n3. National ID\n4. Phone Number\n5. PIN\n6. Return to previous menu\n")
+                    choice = input("Enter your choice: ")
+                    match choice:
+                        case "1":
+                            name = input("Enter new name: ")
+                            user1.update_name(name, uid)
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Name Updated Successfully !")
+                        case "2":
+                            accountNumber = input("Enter new account number: ")
+                            user1.update_accountNumber(accountNumber, uid)
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Account Number Updated Successfully !")
+                        case "3":
+                            nationalID = input("Enter new national ID: ")
+                            user1.update_nationalID(nationalID, uid)
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("National ID Updated Successfully !")
+                        case "4":
+                            phoneNumber = input("Enter new phone number: ")
+                            user1.update_phoneNumber(phoneNumber, uid)
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Phone Number Updated Successfully !")
+                        case "5":
+                            PIN = input("Enter new PIN: ")
+                            user1.update_PIN(PIN, uid)
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("PIN Updated Successfully !")
+                        case "6":
+                            print("Returning to previous menu...")
+                            break
+                        case _:
+                            print("Invalid choice!")
+
+            case "4":
+                uid = int(input("Enter uid of user to retrieve data: "))
+                while True:
+                    print("########################################")
+                    print("What would you like to retrieve:\n")
+                    print("1. Name\n2. Account Number\n3. Account Balance\n4. National ID\n5. Phone Number\n6. Retrieve All\n7. Return to previous menu\n")
+                    choice = input("Enter your choice: ")
+                    match choice:
+                        case "1":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Name: " + user1.retrieve_name(uid))
+                        case "2":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Account Number: " + user1.retrieve_accountNumber(uid))
+                        case "3":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Account Balance: " + user1.retrieve_accountBalance(uid))
+                        case "4":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("National ID: " + user1.retrieve_nationalID(uid))
+                        case "5":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Phone Number: " + user1.retrieve_phoneNumber(uid))
+                        case "6":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print(user1.retrieve_account(uid))
+                        case "7":
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Returning to previous menu...")
+                            break
+                        case _:
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print("Invalid choice!")
+            case "5":
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Users Table: ")
+                user1.show_table("users")
+                input("Press enter to continue...")
+            
+            case "6":
+                # os.system('cls' if os.name == 'nt' else 'clear')
+                print("Exiting...")
+                return
+            case _:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Invalid choice! ")
+            
+
+
+main()
+
+
