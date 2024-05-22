@@ -329,9 +329,7 @@ def main():
                 return
             case _:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print("Invalid choice! ")
-            
-
+                print("Invalid choice! ")            
 
 main()
 
