@@ -121,7 +121,6 @@ class User:
         print(transactions)
         return transactions
 
-
 class Authentication(User):
     def __init__(self, name):
         super().__init__(name)

@@ -4,6 +4,7 @@
 # # arduino = serial.Serial(port="COM12", baudrate=9600, timeout=0.1)
 
 
+
 # def fingerprint_authentication():
 #     try:
 #         while True:

@@ -28,6 +28,7 @@ userID = 0
 condition = False
 serial_port = serial.Serial('COM16', 9600, timeout=1)
 
+
 class ATMApp:
     def __init__(self, root):
         self.root = root

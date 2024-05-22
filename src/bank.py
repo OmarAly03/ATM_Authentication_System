@@ -3,6 +3,7 @@ import database
 import os
 from tabulate import tabulate
 
+
 """
 Class Bank Methods:
 
