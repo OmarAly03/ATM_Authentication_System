@@ -3,6 +3,7 @@ import database
 import os
 from tabulate import tabulate
 
+
 """
 Class Bank Methods:
 
@@ -329,9 +330,7 @@ def main():
                 return
             case _:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print("Invalid choice! ")
-            
-
+                print("Invalid choice! ")            
 
 main()
 
