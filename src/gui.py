@@ -1,3 +1,23 @@
+"""
+ATMApp Class:
+
+- authenticate_fingerprint(self)
+- authenticate_pass(self)
+- screen_deposit1(self)
+- screen_deposit2(self)
+- screen_withdraw1(self)
+- screen_withdraw2(self)
+- screen_show_account_details(self)
+- screen_transfer1(self)
+- screen_transfer2(self)
+- screen_transfer3(self)
+- screen_show_latest_transaction(self)
+- clear_frame(self)
+
+"""
+
+
+
 import tkinter as tk
 from tkinter import messagebox
 import user
@@ -15,7 +35,6 @@ class ATMApp:
         self.root.geometry("1000x450")
         self.root.resizable(False, False)
 
-        
         self.frame = tk.Frame(self.root)
         self.frame.pack(expand=True, fill=tk.BOTH)
 
@@ -33,7 +52,6 @@ class ATMApp:
         self.inactivity_period = 60000
 
         self.screen1()
-
 
     def screen1(self):
         self.clear_frame()
